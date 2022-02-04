@@ -5,12 +5,19 @@ set -e
 BUILD_DIR=$1
 CACHE_DIR=$2
 ENV_DIR=$3
+CACHED_BINARY=$CACHE_DIR/cloud_sql_proxy
 
-if [ ! -f $CACHE_DIR/cloud_sql_proxy ]; then
+if [ ! -f $CACHED_BINARY ]; then
 	echo "-----> Downloading cloud_sql_proxy"
 	mkdir -p $CACHE_DIR
-	wget https://dl.google.com/cloudsql/cloud_sql_proxy.linux.amd64 -O $CACHE_DIR/cloud_sql_proxy
+	wget https://dl.google.com/cloudsql/cloud_sql_proxy.linux.amd64 -O $CACHED_BINARY
+else
+  echo "-----> Found cloud_sql_proxy in the build cache"
 fi
+
+chmod +x $CACHED_BINARY
+VERSION=`$CACHED_BINARY --version`
+echo "       Using version: $VERSION"
 
 echo "-----> Vendoring cloud_sql_proxy into slug"
 if [ ! -d $BUILD_DIR/google/bin ]; then
