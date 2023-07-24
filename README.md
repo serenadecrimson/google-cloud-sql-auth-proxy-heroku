@@ -24,6 +24,11 @@ Add the GCP JSON credentials as `GSP_CREDENTIALS` env variable to you app.
 Set the instance the proxy should connect to with the `GSP_INSTANCES` and local port by `GSP_PORT` env variables. 
 Examples below
 ```
+GSP_CREDENTIALS={
+  "type": "service_account",
+  "project_id":
+  .......
+  }
 GSP_INSTANCES=sacred-tenure-123456:europe-west3:db-name
 GSP_PORT=5430
 ```
